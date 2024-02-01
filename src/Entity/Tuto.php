@@ -32,7 +32,6 @@ class Tuto
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['tuto:list', 'tuto:item'])]
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT)]
