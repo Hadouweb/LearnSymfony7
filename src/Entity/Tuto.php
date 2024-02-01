@@ -2,11 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\TutoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TutoRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['group' => 'tuto:item']),
+        new GetCollection(normalizationContext: ['group' => 'tuto:list'])
+    ],
+    order: ['name' => 'ASC'],
+    paginationEnabled: false,
+)]
 class Tuto
 {
     #[ORM\Id]
@@ -21,6 +32,7 @@ class Tuto
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['tuto:list', 'tuto:item'])]
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT)]
