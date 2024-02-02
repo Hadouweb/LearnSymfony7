@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class TutoController extends AbstractController
 {
     #[Route('/tuto/{slug}', name: 'app_tuto_details')]
-    public function view(EntityManagerInterface $entityManager, string $slug): Response
+    public function view(TutoRepository $tutoRepository, string $slug): Response
     {
-        $tuto = $entityManager->getRepository(Tuto::class)->findOneBySlug($slug);
+        $tuto = $tutoRepository->findOneBySlug($slug);
 
         if (!$tuto) {
             return $this->redirectToRoute('app_home');
